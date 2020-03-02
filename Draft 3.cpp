@@ -46,6 +46,40 @@ double diff(double a, double b) {
 }
 
 
+/*Return a rational decimal in the form of a fraction*/
+void decToFracNonRepeat(string num) {
+
+	int whole_num = 0;
+
+	// convert string num into a double 
+	double decimal = ::atof(num.c_str());
+
+	// If there is whole number, find what the whole number is 
+	for (double i = 0; i <= 1000000; i++) {
+		cout << decimal - i << endl;
+		if (decimal - i == 0) {
+			cout << "statement" << endl;
+			whole_num = i;
+			break;
+		}
+	}
+	cout << "whole_num: " << whole_num << endl;
+
+	// Compare decimal to fraction in existance 
+	// To find its fractional form 
+	for (double denominator = 1; denominator <= 100; denominator++) {
+		for (double numerator = 0; numerator <= (denominator * whole_num); numerator++) {
+			if (decimal == (numerator / denominator)) {
+				cout << numerator << "/" << denominator << endl;
+				break;
+			}
+		}
+	}
+
+}
+
+
+
 /*Given a pattern of numbers:
    - function converts pattern to a repeating decimal
    - it then finds the corresponding fraction for the repeating decimal
@@ -107,34 +141,6 @@ int* decToFracRepeat(string pattern) {
 
 int main() {
 
-	string number, pattern = "";
-	int decimal_index;
-	int* frac;
-
-	cout << "Enter a repeating decimal between 0 and 1: " << endl;
-	cin >> number;
-
-	try {
-		// Find index of "."
-		for (int i = 0; i < number.length(); i++) {
-			if (number[i] == '.') {
-				decimal_index = number[i];
-				pattern = number.substr(i + 1);
-				break;
-			}
-		}
-
-		if (pattern == "")
-			// this will only happen 
-			// when the string is not a decimal
-			throw pattern;
-	}
-	catch (string pattern) {
-		cout << "Error has been caught" << endl;
-		return 0;
-	}
-
-	frac = decToFracRepeat(pattern);
-	cout << frac[0] << "/" << frac[1] << endl;
+	decToFracNonRepeat("1.5");
 	return 0;
 }
