@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <sstream>
 using namespace std;
 
 double diff(double a, double b) {
@@ -12,9 +13,9 @@ double diff(double a, double b) {
    - it then finds the corresponding fraction for the repeating decimal
    
    NOTE: 
-    - THIS ONLY WORKS FOR DECIMALS THAT ARE BETWEEN 0 AND 1!
+    - THIS ONLY WORKS FOR REPEATING DECIMALS THAT ARE BETWEEN 0 AND 1!
    */
-double decToFrac(string pattern) {
+int* decToFrac(string pattern) {
 	
 	// Convert pattern into a repeating decimal with 7 digits 
 	string num_str = "0.";
@@ -47,16 +48,10 @@ double decToFrac(string pattern) {
 			double temp = (numerator / denominator) / 1000000;
 			double frac = (numerator / denominator) - temp;
 
-			// debug lines (remove later)
-			cout << numerator << "/" << denominator << " in decimal form: " << frac << endl;
-			cout << decimal << endl;
-
 			// if the fraction equals decimal 
 			if ((diff(decimal, frac) <= 0.00001) and (diff(decimal, frac) > 0)) {
-				cout << "WE HAVE FOUND A MATCH!" << endl;
 				fraction[0] = numerator;
 				fraction[1] = denominator;
-				cout << fraction[0] << "/" << fraction[1] << endl; // debug line 
 
 				is_break = true;
 				break;
@@ -69,11 +64,39 @@ double decToFrac(string pattern) {
 
 
 
-	return decimal;
+	return fraction;
 }
 
 int main() {
 
-	cout << decToFrac("020408163265306122448979591836734693877551") << endl;
+	string number, pattern = "";
+	int decimal_index;
+	int* frac;
+
+	cout << "Enter a repeating decimal between 0 and 1 " << endl;
+	cin >> number;
+
+	try {
+		// Find index of "."
+		for (int i = 0; i < number.length(); i++) {
+			if (number[i] == '.') {
+				decimal_index = number[i];
+				pattern = number.substr(i + 1);
+				break;
+			}
+		}
+
+		if (pattern == "") 
+			// this will only happen 
+			// when the string is not a decimal
+			throw pattern;
+	}
+	catch (string pattern) {
+		cout << "Error has been caught" << endl;
+		return 0;
+	}
+
+	frac = decToFrac(pattern);
+	cout << frac[0] << "/" << frac[1] << endl;
 	return 0;
 }
