@@ -49,7 +49,7 @@ int* decToFrac(string pattern) {
 			double frac = (numerator / denominator) - temp;
 
 			// if the fraction equals decimal 
-			if ((diff(decimal, frac) <= 0.00001) and (diff(decimal, frac) > 0)) {
+			if ((diff(decimal, frac) <= 0.000001) and (diff(decimal, frac) > 0)) {
 				fraction[0] = numerator;
 				fraction[1] = denominator;
 
@@ -73,7 +73,7 @@ int main() {
 	int decimal_index;
 	int* frac;
 
-	cout << "Enter a repeating decimal between 0 and 1 " << endl;
+	cout << "Enter a repeating decimal between 0 and 1: " << endl;
 	cin >> number;
 
 	try {
