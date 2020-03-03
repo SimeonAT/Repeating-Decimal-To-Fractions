@@ -150,9 +150,66 @@ int* decToFracRepeat(string pattern) {
 	return fraction;
 }
 
+std::string fractions(std::string decimal) {
+
+	/* split the string into two substrings:
+	  one holds the whole number part
+	 the other holds the repeating part */
+
+	string decimal2 = decimal.substr(0, decimal.length() - 1); // decimal2 is decimal without the enclosing ")"
+
+	string non_repeat, repeat;
+	string substr1, substr2, substr3;
+	int period_index, parenthesis_index = 0; // holds index location for '.' and '(' character 
+
+	for (int i = 0; i < decimal2.length(); i++) {
+
+		// Change repeat into a decimal with corect decimal place
+		if (decimal2[i] == '.') {
+			substr1 = decimal2.substr(i + 1);
+			period_index = i;
+		}
+
+		if (decimal2[i] == '(') {
+			parenthesis_index = i;
+
+			substr2 = decimal2.substr(period_index + 1, parenthesis_index - period_index - 1);
+
+			//substr3 
+			substr3 = decimal2.substr(parenthesis_index + 1);
+
+			// add substr2.length() zeros into repeat 
+			repeat += ".";
+			for (int p = 0; p < substr2.length(); p++) {
+				repeat += "0";
+			}
+
+			// add substr3 into repeat 
+			repeat += substr3;
+
+			non_repeat = decimal2.substr(0, i);
+			// add zero to end of non_repeat if "." is last character
+			if (non_repeat.back() == '.') { non_repeat += "0"; }
+		}
+	}
+
+	cout << "non_repeat: " << non_repeat << endl;
+	cout << "repeat: " << repeat << endl;
+	cout << "substring of repeat: " << repeat.substr(1) << endl;
+
+	// convert repeat and non_repeat into fractions 
+
+
+	return "stub";
+
+}
+
 int main() {
 
-	int* test = decToFracNonRepeat("10.25");
-	cout << test[0] << "/" << test[1] << endl;
+	string input;
+	cout << "Enter a decimal (with parenthesis) : " << endl;
+	cin >> input;
+
+	string temp = fractions(input);
 	return 0;
 }
