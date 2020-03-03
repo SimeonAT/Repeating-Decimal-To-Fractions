@@ -160,7 +160,7 @@ std::string fractions(std::string decimal) {
 
 	string non_repeat, repeat;
 	string substr1, substr2, substr3;
-	int period_index, parenthesis_index = 0; // holds index location for '.' and '(' character 
+	int period_index = 0, parenthesis_index = 0; // holds index location for '.' and '(' character 
 
 	for (int i = 0; i < decimal2.length(); i++) {
 
@@ -197,12 +197,17 @@ std::string fractions(std::string decimal) {
 	int* temp_1 = decToFracNonRepeat(non_repeat);
 	int non_repeat_fraction[] = {temp_1[0], temp_1[1]};
 
+	/*BUG IN REPEAT FRACTION FUNCTION! FIX LATER! */
 	int* temp_2 = decToFracRepeat(repeat.substr(1));
-	int repeat_fraction[] = {temp_2[0], temp_2[1]};
+	int repeat_fraction[] = {temp_2[0], temp_2[1]}; 
 
-	cout << "non_repeat_fraction: " << non_repeat_fraction[0] << "/" << non_repeat_fraction[1] << endl;
-	cout << "repeat_fraction: " << repeat_fraction[0] << "/" << repeat_fraction[1] << endl;
+	// Add fractions, simplify it, and return the result 
+	int* temp = addFrac(non_repeat_fraction, repeat_fraction);
+	int sum[] = {temp[0], temp[1]};
+	int* temp3 = simplify(sum[0], sum[1]);
+	int simplified_sum[] = {temp3[0], temp3[1]};
 
+	cout << simplified_sum[0] << "/" << simplified_sum[1] << endl;
 
 	return "stub";
 
