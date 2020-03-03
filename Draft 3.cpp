@@ -56,24 +56,37 @@ void decToFracNonRepeat(string num) {
 
 	// If there is whole number, find what the whole number is 
 	for (double i = 0; i <= 1000000; i++) {
-		cout << decimal - i << endl;
-		if (decimal - i == 0) {
+		if (floor(decimal) == i) {
 			cout << "statement" << endl;
 			whole_num = i;
 			break;
 		}
 	}
-	cout << "whole_num: " << whole_num << endl;
 
 	// Compare decimal to fraction in existance 
 	// To find its fractional form 
+	int max_denominator;
+
 	for (double denominator = 1; denominator <= 100; denominator++) {
-		for (double numerator = 0; numerator <= (denominator * whole_num); numerator++) {
+		bool is_break = false; // did the outer loop break yet?
+
+		// Makes dem large enough for fraction to be bigger than decimal 
+		int max_numerator = denominator + (denominator * whole_num); 
+
+		for (double numerator = 0; numerator <= max_numerator; numerator++) {
+			cout << "Looking at: " << numerator << "/" << denominator << endl;
+			cout << "Decimal value is: " << numerator / denominator << endl;
+
 			if (decimal == (numerator / denominator)) {
+				cout << "A MATCH HAS BEEN FOUND! " << endl;
 				cout << numerator << "/" << denominator << endl;
+				is_break = true;
 				break;
 			}
+			cout << endl;
 		}
+		if (is_break == true)
+			break;
 	}
 
 }
@@ -141,6 +154,6 @@ int* decToFracRepeat(string pattern) {
 
 int main() {
 
-	decToFracNonRepeat("1.5");
+	decToFracNonRepeat("0.3125");
 	return 0;
 }
