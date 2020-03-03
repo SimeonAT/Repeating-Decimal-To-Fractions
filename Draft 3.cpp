@@ -47,9 +47,10 @@ double diff(double a, double b) {
 
 
 /*Return a rational decimal in the form of a fraction*/
-void decToFracNonRepeat(string num) {
+int* decToFracNonRepeat(string num) {
 
 	int whole_num = 0;
+	int fraction[2];
 
 	// convert string num into a double 
 	double decimal = ::atof(num.c_str());
@@ -57,7 +58,6 @@ void decToFracNonRepeat(string num) {
 	// If there is whole number, find what the whole number is 
 	for (double i = 0; i <= 1000000; i++) {
 		if (floor(decimal) == i) {
-			cout << "statement" << endl;
 			whole_num = i;
 			break;
 		}
@@ -74,20 +74,18 @@ void decToFracNonRepeat(string num) {
 		int max_numerator = denominator + (denominator * whole_num); 
 
 		for (double numerator = 0; numerator <= max_numerator; numerator++) {
-			cout << "Looking at: " << numerator << "/" << denominator << endl;
-			cout << "Decimal value is: " << numerator / denominator << endl;
 
 			if (decimal == (numerator / denominator)) {
-				cout << "A MATCH HAS BEEN FOUND! " << endl;
-				cout << numerator << "/" << denominator << endl;
+				fraction[0] = numerator; fraction[1] = denominator;
 				is_break = true;
 				break;
 			}
-			cout << endl;
 		}
 		if (is_break == true)
 			break;
 	}
+
+	return fraction;
 
 }
 
@@ -154,6 +152,7 @@ int* decToFracRepeat(string pattern) {
 
 int main() {
 
-	decToFracNonRepeat("0.3125");
+	int* test = decToFracNonRepeat("10.25");
+	cout << test[0] << "/" << test[1] << endl;
 	return 0;
 }
