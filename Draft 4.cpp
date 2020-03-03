@@ -193,11 +193,15 @@ std::string fractions(std::string decimal) {
 		}
 	}
 
-	cout << "non_repeat: " << non_repeat << endl;
-	cout << "repeat: " << repeat << endl;
-	cout << "substring of repeat: " << repeat.substr(1) << endl;
-
 	// convert repeat and non_repeat into fractions 
+	int* temp_1 = decToFracNonRepeat(non_repeat);
+	int non_repeat_fraction[] = {temp_1[0], temp_1[1]};
+
+	int* temp_2 = decToFracRepeat(repeat.substr(1));
+	int repeat_fraction[] = {temp_2[0], temp_2[1]};
+
+	cout << "non_repeat_fraction: " << non_repeat_fraction[0] << "/" << non_repeat_fraction[1] << endl;
+	cout << "repeat_fraction: " << repeat_fraction[0] << "/" << repeat_fraction[1] << endl;
 
 
 	return "stub";
