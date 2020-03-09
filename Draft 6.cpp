@@ -64,13 +64,10 @@ std::string fractions(std::string decimal) {
 			for (int j = 0; j < repeat.length(); j++) {
 				repeat_denominator += "9";
 			}
-			/*------------------- FIXME! OVERFLOW HERE ---------------------*/
 
 			// convert repeat and repeat_denominator to int and put it into an array 
 			stringstream top(repeat); top >> repeat_top;
 			stringstream bottom(repeat_denominator); bottom >> repeat_bottom;
-
-			/*--------------------------------------------------------------*/
 			double repeat_fraction[2] = { repeat_top, repeat_bottom };
  
 			// conver non_repeat to int, then change non_repeat to fraction with repeat_bottom as denominator
