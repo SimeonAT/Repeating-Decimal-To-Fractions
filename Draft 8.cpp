@@ -32,7 +32,6 @@ unsigned long long int* simplify(unsigned long long int nume, unsigned long long
 
 	// Find GCD, then divide numerator and denominator by GCD 
 	unsigned long long int divisor = gcd(nume, den);
-	cout << "divisor: " << divisor;
 	numerator = numerator / divisor;
 	denominator = denominator / divisor;
 
@@ -151,13 +150,13 @@ string partially_repeat(char decimal_char[]) {
 
 	// divide by multiplying the denominator by divide_back
 	temp_frac_array_int[1] *= pow(10, divide_back);
-	cout << temp_frac_array_int[0] << "/" << temp_frac_array_int[1] << endl;
 
 	// simplify the fraction again 
 	unsigned long long int* return_fraction = simplify(temp_frac_array_int[0], temp_frac_array_int[1]);
-	string return_array[2] = {to_string(return_fraction[0]), to_string(return_fraction[1])};
 
-	cout << return_array[0] << "/" << return_array[1] << endl;
+	unsigned long long int denominator = return_fraction[1];
+	unsigned long long int numeator = return_fraction[0];
+
 	return "stub";
 }
 
@@ -185,11 +184,9 @@ int main() {
 	/* Fully Repeating Test Case: 0.(052631578947368421) 
 	   Partially Repeating Test Case: 1.017(857142) */
 
-	//char test[] = "1.017(857142)";
-	//partially_repeat(test);
+	char test[] = "1.017(857142)";
+	partially_repeat(test);
 
-	unsigned long long int* test = simplify(7125, 7000);
-	cout << test[0] << "/" << test[1] << endl;
 
 	return 0;
 }
