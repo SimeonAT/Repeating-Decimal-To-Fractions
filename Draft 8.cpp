@@ -76,8 +76,12 @@ string fully_repeat(char decimal_char[]) {
 	// simplify the fraction 
 	unsigned long long int* pTemp = simplify(fraction[0], fraction[1]);
 	unsigned long long int return_fraction[2] = { pTemp[0], pTemp[1] };
+
+	// convert return_fraction array to string, and return it 
+	string numerator = to_string(return_fraction[0]);
+	string denominator = to_string(return_fraction[1]);
 	
-	return return_fraction[0] + "/" + return_fraction[1];
+	return numerator + "/" + denominator;
 }
 
 
@@ -94,13 +98,15 @@ string fractions(string decimal) {
 
 	// find "(" and "." to see if fully or partially repeating
 	char* decimal_part = strstr(decimal_char, ".");
-	if (decimal_part[1] == '(') // If the there is a parenthesis after the '.'
-		cout << "Fully Repeating Decimal" << endl;
-	else
+	if (decimal_part[1] == '(') {
+		// If the there is a parenthesis after the '.'
+		return fully_repeat(decimal_char);
+	}
+	else {
 		cout << "Partially Repeating Fraction" << endl;
+		return "stub";
+	}
 
-
-	return "stub";
 }
 
 
@@ -108,9 +114,7 @@ int main() {
 	/* Fully Repeating Test Case: 0.(052631578947368421) 
 	   Partially Repeating Test Case: 1.017(857142) */
 
-	char test[] = "0.(052631578947368421)";
-	string test_value = fully_repeat(test);
-	cout << test_value << endl;
+	cout << fractions("0.(052631578947368421)") << endl;
 
 	return 0;
 }
