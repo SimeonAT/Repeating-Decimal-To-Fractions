@@ -155,9 +155,9 @@ string partially_repeat(char decimal_char[]) {
 	unsigned long long int* return_fraction = simplify(temp_frac_array_int[0], temp_frac_array_int[1]);
 
 	unsigned long long int denominator = return_fraction[1];
-	unsigned long long int numeator = return_fraction[0];
+	unsigned long long int numerator = return_fraction[0];
 
-	return "stub";
+	return to_string(numerator) + "/" + to_string(denominator);
 }
 
 
@@ -173,8 +173,7 @@ string fractions(string decimal) {
 		return fully_repeat(decimal_char);
 	}
 	else {
-		cout << "Partially Repeating Fraction" << endl;
-		return "stub";
+		return partially_repeat(decimal_char);
 	}
 
 }
@@ -184,8 +183,7 @@ int main() {
 	/* Fully Repeating Test Case: 0.(052631578947368421) 
 	   Partially Repeating Test Case: 1.017(857142) */
 
-	char test[] = "1.017(857142)";
-	partially_repeat(test);
+	cout << fractions("1.017(857142)") << endl;
 
 
 	return 0;
