@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <string>
-#include <string>
 using namespace std;
 
 
@@ -40,18 +39,45 @@ unsigned long long int* simplify(unsigned long long int nume, unsigned long long
 }
 
 
-string fully_repeat(string decimal) {
-	// Convert decimal into a char array called decimal_char[]
-	char decimal_char[1024];
-	strcpy_s(decimal_char, decimal.c_str());
+string fully_repeat(char decimal_char[]) {
+	/*NOTE: decimal_char is the decimal string in the form of a char array */
 
-	// Get the non-repeating and repeating parts of decimal_char
+	// get repeating part
 	char* temp1 = strstr(decimal_char, "(");
 	string temp2 = temp1;
-	string repeat = temp2.substr(1, temp2.length() - 2);
+	string repeat_str = temp2.substr(1, temp2.length() - 2);
 
-	cout << repeat << endl;
-	return "stub";
+	// get non-repeating part
+	string non_repeat_str;
+	for (int i = 0; i < 30; i++) {
+		if (decimal_char[i] == '.')
+			break;
+		non_repeat_str += decimal_char[i];
+	}
+
+	// Convert repeat and non_repeat into a long long int
+	long long int repeat = stoll(repeat_str);
+	long long int non_repeat = stoll(non_repeat_str);
+
+	// turn repeat into a fraction
+	// fraction: repeat / repeat.length() amount of 9's
+	string repeat_denominator_str;
+	for (int i = 0; i < repeat_str.length(); i++) repeat_denominator_str += "9";
+	long long int fraction_repeat[2] = { repeat, stoll(repeat_denominator_str) };
+
+	/* NOTE: USE fraction_repeat[1] as the denominator */
+
+	// turn non_repeat into a fraction 
+	long long int fraction_non_repeat[2] = { non_repeat * fraction_repeat[1], fraction_repeat[1]};
+
+	// add repeat_fraction and non_repeat_fraction together 
+	long long int fraction[2] = { fraction_repeat[0] + fraction_non_repeat[0], fraction_repeat[1]};
+
+	// simplify the fraction 
+	unsigned long long int* pTemp = simplify(fraction[0], fraction[1]);
+	unsigned long long int return_fraction[2] = { pTemp[0], pTemp[1] };
+	
+	return return_fraction[0] + "/" + return_fraction[1];
 }
 
 
@@ -63,12 +89,12 @@ string partially_repeat(string decimal) {
 
 string fractions(string decimal) {
 	// Convert decimal into a char array called decimal_char[]
-	char decimal_char[1024];
+	char decimal_char[30];
 	strcpy_s(decimal_char, decimal.c_str());
 
 	// find "(" and "." to see if fully or partially repeating
-	char* temp = strstr(decimal_char, ".");
-	if (temp[1] == '(')
+	char* decimal_part = strstr(decimal_char, ".");
+	if (decimal_part[1] == '(') // If the there is a parenthesis after the '.'
 		cout << "Fully Repeating Decimal" << endl;
 	else
 		cout << "Partially Repeating Fraction" << endl;
@@ -77,11 +103,14 @@ string fractions(string decimal) {
 	return "stub";
 }
 
+
 int main() {
 	/* Fully Repeating Test Case: 0.(052631578947368421) 
 	   Partially Repeating Test Case: 1.017(857142) */
 
-	fully_repeat("0.(052631578947368421)");
+	char test[] = "0.(052631578947368421)";
+	string test_value = fully_repeat(test);
+	cout << test_value << endl;
 
 	return 0;
 }
