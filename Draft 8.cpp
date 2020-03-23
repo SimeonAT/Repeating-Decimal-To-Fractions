@@ -3,6 +3,7 @@
 #include <string.h>
 #include <string>
 #include <math.h>
+#include <assert.h>
 using namespace std;
 
 
@@ -183,7 +184,14 @@ int main() {
 	/* Fully Repeating Test Case: 0.(052631578947368421) 
 	   Partially Repeating Test Case: 1.017(857142) */
 
-	cout << fractions("1.017(857142)") << endl;
+	// Test cases 
+	assert(fractions("0.(09)") == "1/11");
+	assert(fractions("0.0(45)") == "1/22");
+	assert(fractions("2.1(313)") == "10646/4995");
+	assert(fractions("0.0208(3)") == "1/48");
+	assert(fractions("12.(12345)") == "404111/33333");
+	assert(fractions("1.017(857142)") == "57/56");
+	assert(fractions("0.(052631578947368421)") == "1/19");
 
 
 	return 0;
