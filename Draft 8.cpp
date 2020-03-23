@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <string>
+#include <math.h>
 using namespace std;
 
 
@@ -31,6 +32,7 @@ unsigned long long int* simplify(unsigned long long int nume, unsigned long long
 
 	// Find GCD, then divide numerator and denominator by GCD 
 	unsigned long long int divisor = gcd(nume, den);
+	cout << "divisor: " << divisor;
 	numerator = numerator / divisor;
 	denominator = denominator / divisor;
 
@@ -122,9 +124,40 @@ string partially_repeat(char decimal_char[]) {
 
 	/* Everything is going to be done exactly the same as in the fully_repeat function. 
        The only catch is that you're gonna need to divide what you get by divide_back after doing so. */
-	string temp_fraction_str = fully_repeat(temp_decimal);
+	string temp_fraction = fully_repeat(temp_decimal);
 
-	cout << temp_fraction_str << endl;
+
+	/* Convert temp_fraction into a string array; first element numerator, 
+	   second element denominator */
+	int divider_index = 0; // holds index for '/' in temp_fraction
+	string temp_frac_array[2];
+
+	// Assemble temp_frac_array numerator 
+	for (int i = 0; i < temp_fraction.length(); i++) {
+		if (temp_fraction[i] == '/') {
+			divider_index = i;
+			break;
+		}
+		temp_frac_array[0] += temp_fraction[i];
+	}
+
+	// Assemble temp_frac_array denominator 
+	for (int i = divider_index + 1; i < temp_fraction.length(); i++) {
+		temp_frac_array[1] += temp_fraction[i];
+	}
+
+	// Change temp_frac_array to an unsigned long long int array 
+	unsigned long long int temp_frac_array_int[2] = {stoll(temp_frac_array[0]), stoll(temp_frac_array[1])};
+
+	// divide by multiplying the denominator by divide_back
+	temp_frac_array_int[1] *= pow(10, divide_back);
+	cout << temp_frac_array_int[0] << "/" << temp_frac_array_int[1] << endl;
+
+	// simplify the fraction again 
+	unsigned long long int* return_fraction = simplify(temp_frac_array_int[0], temp_frac_array_int[1]);
+	string return_array[2] = {to_string(return_fraction[0]), to_string(return_fraction[1])};
+
+	cout << return_array[0] << "/" << return_array[1] << endl;
 	return "stub";
 }
 
@@ -152,8 +185,11 @@ int main() {
 	/* Fully Repeating Test Case: 0.(052631578947368421) 
 	   Partially Repeating Test Case: 1.017(857142) */
 
-	char test[] = "1.017(857142)";
-	partially_repeat(test);
+	//char test[] = "1.017(857142)";
+	//partially_repeat(test);
+
+	unsigned long long int* test = simplify(7125, 7000);
+	cout << test[0] << "/" << test[1] << endl;
 
 	return 0;
 }
